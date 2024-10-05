@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARIA Example</title>
+    <style>
+        #extra-info {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Frequently Asked Questions (FAQ)</h1>
+
+    <details>
+        <summary>What is HTML?</summary>
+        <p>HTML (Hypertext Markup Language) is the standard language for creating web pages and web applications. It defines the structure of web content using elements and tags.</p>
+    </details>
+
+    <details>
+        <summary>What is CSS?</summary>
+        <p>CSS (Cascading Style Sheets) is used to style and layout web pages. It allows you to apply styles like colors, fonts, spacing, and positioning to HTML elements.</p>
+    </details>
+
+    <details>
+        <summary>What is JavaScript?</summary>
+        <p>JavaScript is a programming language that allows you to create dynamic and interactive effects on web pages. It is commonly used for client-side scripting.</p>
+    </details>
+    <h1>ARIA Attributes Example</h1>
+    
+ <img src="../Become a perfect man/slidimg/fatima.jpeg" alt="" loading="lazy">
+    <button aria-expanded="false" aria-controls="extra-info" id="toggle-button">
+        Show More Info
+    </button>
+
+    <div id="extra-info" aria-hidden="true">
+        <p>This is extra information that can be shown or hidden based on the button click.</p>
+    </div>
+
+    <script>
+        const button = document.getElementById('toggle-button');
+        const info = document.getElementById('extra-info');
+
+        button.addEventListener('click', () => {
+            const expanded = button.getAttribute('aria-expanded') === 'true';
+
+            button.setAttribute('aria-expanded', !expanded);
+
+            info.setAttribute('aria-hidden', expanded);
+
+            if (expanded) {
+                info.style.display = 'none';
+                button.textContent = 'Show More Info';
+            } else {
+                info.style.display = 'block';
+                button.textContent = 'Hide More Info';
+            }
+        });
+        const detailsElements = document.querySelectorAll('details');
+detailsElements.forEach(detail => {
+    detail.addEventListener('click', function() {
+        detailsElements.forEach(otherDetail => {
+            if (otherDetail !== detail && otherDetail.open) {
+                otherDetail.removeAttribute('open');
+            }
+        });
+    });
+});
+    </script>
+</body>
+</html>

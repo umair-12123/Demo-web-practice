@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech Translation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        #talkButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        #talkButton:active {
+            background-color: #0056b3;
+        }
+
+        select, #translatedText {
+            margin-top: 10px;
+            font-size: 16px;
+            padding: 10px;
+            width: 100%;
+        }
+
+        #translatedText {
+            border: 1px solid #ddd;
+            margin-top: 20px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Speech to Text Translation</h2>
+
+    <label for="languageSelect">Choose a language to translate to:</label>
+    <select id="languageSelect">
+        <option value="ur">Urdu</option>
+        <option value="en">English</option>
+        <option value="es">Spanish</option>
+        <option value="fr">French</option>
+        <option value="de">German</option>
+        <!-- Add more languages as needed -->
+    </select>
+
+    <br>
+    <button id="talkButton">Start Talking</button>
+
+    <h3>Translated Text:</h3>
+    <div id="translatedText">Your translated text will appear here.</div>
+
+    <!-- Include the necessary JavaScript -->
+    <script>
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+        recognition.lang = 'en-US';  // Default recognition language is English
+        
+        const synth = window.speechSynthesis;
+
+        // Event listener for the start button
+        document.getElementById('talkButton').addEventListener('click', () => {
+            recognition.start();
+        });
+
+        // When speech is recognized, start translation
+        recognition.onresult = function(event) {
+            const speechToText = event.results[0][0].transcript;
+            console.log('You said:', speechToText);
+
+            // Translate the text after recognizing the speech
+            translateText(speechToText);
+        };
+
+        // Google Translate API
+        async function translateText(text) {
+            const languageCode = document.getElementById('languageSelect').value;
+            const apiUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${languageCode}&dt=t&q=${encodeURIComponent(text)}`;
+
+            try {
+                const response = await fetch(apiUrl);
+                const result = await response.json();
+
+                // The translated text is in the first array
+                const translatedText = result[0][0][0];
+
+                // Display translated text in the page
+                document.getElementById('translatedText').innerText = translatedText;
+
+                // Speak out the translated text
+                speak(translatedText, languageCode);
+            } catch (error) {
+                console.error('Error translating text:', error);
+                document.getElementById('translatedText').innerText = "Translation failed. Try again.";
+            }
+        }
+
+        // Function to speak the translated text
+        function speak(text, lang) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = lang;  // Set the language of the utterance
+            synth.speak(utterance);
+        }
+
+        // Handle recognition errors
+        recognition.onerror = function(event) {
+            console.error('Speech recognition error:', event.error);
+            document.getElementById('translatedText').innerText = "Sorry, I did not understand. Please try again.";
+        };
+    </script>
+
+</body>
+</html>

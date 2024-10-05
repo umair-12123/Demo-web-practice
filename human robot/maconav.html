@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar with Animated Search Bar</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <style>
+        .navbar {
+            background-color: #343a40;
+            padding: 10px 20px;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .nav-link {
+            color: #fff !important;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #ffcc00 !important;
+        }
+
+        /* Search bar container (hidden initially) */
+        .search-container {
+            display: none;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-top: 2px solid #343a40;
+        }
+
+        /* Search bar with animated border */
+        .search-container input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            outline: none;
+            position: relative;
+            z-index: 1;
+            background-color: #fff;
+        }
+
+        /* Animated border effect */
+        .search-container input:focus {
+            outline: none;
+        }
+
+        .animated-border {
+            position: relative;
+            padding: 10px;
+            border: 2px solid transparent;
+            border-radius: 5px;
+        }
+
+        .animated-border::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            border-radius: 5px;
+            border: 2px solid transparent;
+            border-image: linear-gradient(to right, red, blue, green, yellow) 1;
+            z-index: -1;
+            animation: border-animation 3s linear infinite;
+        }
+
+        /* Keyframes for animated border */
+        @keyframes border-animation {
+            0% {
+                border-image-slice: 1;
+            }
+            50% {
+                border-image-slice: 0;
+            }
+            100% {
+                border-image-slice: 1;
+            }
+        }
+
+        /* Search Icon styling */
+        .search-icon {
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .close-icon {
+            cursor: pointer;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <!-- Logo -->
+            <a class="navbar-brand" href="#">MyBrand</a>
+
+            <!-- Hamburger button for mobile view -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar links -->
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+
+                <!-- Search Icon (default) -->
+                <i class="fas fa-search search-icon" id="toggleSearch"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Bar (hidden initially) -->
+    <div class="search-container" id="searchContainer">
+        <div class="animated-border">
+            <input type="text" class="form-control" placeholder="Search...">
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- jQuery to toggle search bar and icon -->
+    <script>
+        $(document).ready(function () {
+            let isOpen = false;
+
+            $('#toggleSearch').click(function () {
+                if (!isOpen) {
+                    // Show search bar
+                    $('#searchContainer').slideDown();
+                    // Change search icon to cross
+                    $(this).removeClass('fa-search').addClass('fa-times');
+                    isOpen = true;
+                } else {
+                    // Hide search bar
+                    $('#searchContainer').slideUp();
+                    // Change cross icon back to search
+                    $(this).removeClass('fa-times').addClass('fa-search');
+                    isOpen = false;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
