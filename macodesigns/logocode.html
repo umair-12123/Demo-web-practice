@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maco Logo  Curve</title>
+    <style>
+        body {
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }
+        #curve {
+            stroke-width: 5;
+            stroke: green; 
+            animation: curveColorChange 6s infinite;
+        }
+        @keyframes curveColorChange {
+            0% { stroke: green; }
+            25% { stroke: gray; }
+            50% { stroke: rgb(13, 15, 13); }
+            75% { stroke: rgb(230, 215, 11); }
+            100% { stroke: rgb(128, 0, 0); }
+        }
+
+        .logo-container {
+            position: relative;
+            text-align: center;
+            color: gray;
+        }
+
+        .logo-text {
+            font-size: 72px;
+            font-weight: bold;
+            letter-spacing: 5px;
+            display: inline-block;
+            transition: transform 0.3s ease; 
+        }
+
+        .highlight {
+            color: green; 
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .logo-slogan {
+            color: #aaa;
+            font-size: 18px;
+            font-style: italic;
+            margin-top: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .logo-text:hover {
+            transform: scale(1.1) rotate(5deg); 
+            color: white;
+        }
+
+        .highlight:hover {
+            transform: scale(1.2); 
+        }
+
+        .logo-slogan:hover {
+            color: green;
+            transform: translateY(5px); 
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .logo-text {
+            animation: pulse 2s infinite;
+        }
+        .curve {
+            position: absolute;
+            top: 20px; 
+            left: 20px; 
+            z-index: -1; 
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <div class="logo-text">
+            <span class="highlight">M</span>aco
+        </div>
+        <svg width="400" height="200" class="curve">
+            <path id="curve" d="M 00,60 Q 200,50 180,80" stroke="green" stroke-width="5" fill="transparent" />
+        </svg>
+        <div class="logo-slogan">Me and You</div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.logo-text').hover(function() {
+                $(this).css('color', 'white');
+            }, function() {
+                $(this).css('color', 'gray');
+            });
+
+            $('.logo-slogan').hover(function() {
+                $(this).css('color', 'green');
+            }, function() {
+                $(this).css('color', '#aaa');
+            });
+        });
+    </script>
+</body>
+</html>

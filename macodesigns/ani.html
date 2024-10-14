@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maco Logo Animation with Colorful Curve</title>
+    <style>
+        body {
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .logo-container {
+            text-align: center;
+        }
+
+        #logo-text {
+            font-family: 'Arial', sans-serif;
+            font-size: 60px;
+            fill: gray;
+            letter-spacing: 5px;
+        }
+
+        .letter {
+            animation: colorChange 2s infinite;
+        }
+
+        @keyframes colorChange {
+            0% { fill: green; }
+            25% { fill: gray; }
+            50% { fill: green; }
+            75% { fill: gray; }
+            100% { fill: green; }
+        }
+
+        /* Curve animation */
+        #curve {
+            stroke-width: 5;
+            stroke: green; /* Initial color */
+            animation: curveColorChange 6s infinite;
+        }
+
+        @keyframes curveColorChange {
+            0% { stroke: green; }
+            25% { stroke: gray; }
+            50% { stroke: lightgreen; }
+            75% { stroke: silver; }
+            100% { stroke: green; }
+        }
+
+        .slogan {
+            font-family: 'Arial', sans-serif;
+            font-size: 30px;
+            color: gray;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <svg width="400" height="200">
+            <path id="curve" d="M 50 150 C 100 50, 200 50, 350 150" stroke="green" fill="transparent" />
+            <text id="logo-text">
+                <textPath href="#curve" startOffset="0">
+                    <tspan class="letter" style="animation-delay: 0s;">M</tspan>
+                    <tspan class="letter" style="animation-delay: 0.2s;">a</tspan>
+                    <tspan class="letter" style="animation-delay: 0.4s;">c</tspan>
+                    <tspan class="letter" style="animation-delay: 0.6s;">o</tspan>
+                </textPath>
+            </text>
+        </svg>
+        <div class="slogan">Me and You</div>
+    </div>
+</body>
+</html>
